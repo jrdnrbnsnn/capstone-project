@@ -1,42 +1,200 @@
-#root {
-  max-width: 1280px;
+.navbar {
+  background-color: #333; /* Dark grey background */
+  padding: 1rem 2rem; /* Adds some padding around the navbar */
+  position: fixed; /* Keeps the navbar fixed at the top of the viewport */
+  top: 0; /* Aligns the navbar at the top */
+  left: 0; /* Aligns the navbar to the left */
+  width: 100%; /* Ensures the navbar stretches across the full width of the viewport */
+  background-color: #333; /* Dark grey background, adjust as needed */
+  padding: 1rem 2rem; /* Adds some padding around the navbar */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: adds a slight shadow for depth */
+  z-index: 1000; /* Ensures the navbar stays on top of other content */
+}
+
+.navbar nav {
+  text-align: center; /* Centers the navigation links */
+}
+
+.navbar nav ul {
+  list-style-type: none; /* Removes bullet points from the list */
+  padding: 0; /* Removes padding */
+  margin: 0 auto; /* Centers the list */
+  display: flex; /* Aligns items in a row */
+  justify-content: center; /* Centers the list items horizontally */
+  gap: 20px; /* Adds some space between the list items */
+}
+
+.navbar nav ul li a {
+  color: #ffffff; /* Ensures that links are white */
+  text-decoration: none; /* Removes underline from links */
+  font-weight: bold; /* Makes the font a bit bolder for better readability */
+}
+
+.navbar nav ul li a:hover,
+.navbar nav ul li a:focus {
+  text-decoration: underline; /* Adds underline on hover/focus for better accessibility */
+  color: #ddd; /* Lightens the link color on hover/focus */
+}
+
+.navbar nav ul li:not(:last-child)::after {
+  content: "|"; /* This is the content you want to insert */
+  color: #ffffff; /* Adjust the color as needed, to match your navbar's text color */
+  margin-left: 10px; /* Adds some space before the bar */
+  margin-right: 10px; /* Adds some space after the bar */
+}
+.navbar-categories {
+  background-color: #f0f0f0; /* Lighter grey */
+  padding: 10px 0; /* Adjust padding as needed */
+  /* Other styles for positioning and appearance */
+  width: 100%; /* Ensures it spans the full width */
+  position: sticky; /* Sticky position to stay at top of the viewport */
+  top: 30px; /* Adjust this value to the height of your main navbar */
+  z-index: 999; /* Ensure it's below the fixed navbar if overlapping occurs */
+}
+
+.navbar-categories ul {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  justify-content: center;
+}
+/* Styles for the featured product */
+.featured-product {
+  background-color: white; /* Sets the background color to white */
+  text-align: center; /* Centers the text */
+  padding: 60px 0; /* Adds some padding above and below the text */
+}
+
+.featured-product li {
+  list-style: none;
+}
+
+.featured-product img {
+  width: 75%; /* Makes the image full width */
+  max-width: 100%; /* Ensures the image does not exceed its container */
+  height: auto; /* Keeps the image aspect ratio */
+}
+
+.featured-product p {
+  margin-top: 10px; /* Adds space between the image and the paragraph */
+  font-style: italic; /* Italicizes the text */
+  color: #333;
+}
+
+/* Styles for the product list container */
+.product-list {
+  display: flex;
+  flex-wrap: wrap; /* Allows flex items to wrap as needed */
+  padding: 20px; /* Adds padding around the container */
+  background-color: white; /* Sets the background color to white */
+  gap: 20px; /* Adds gap between the flex items */
+  border-radius: 5px;
+}
+
+.product-list img {
+  width: 25%; /* Makes the image full width */
+  max-width: 100%; /* Ensures the image does not exceed its container */
+  height: auto; /* Keeps the image aspect ratio */
+}
+
+/* Ensuring the <ul> takes full width if it's also a flex item */
+.product-list ul {
+  list-style-type: none; /* Removes default list styling */
+  padding: 0;
+  margin: 0;
+  display: flex; /* Optional: Only if you want <ul> to also be a flex container */
+  flex-wrap: wrap; /* Optional: Allows wrapping for the <ul> */
+  gap: 20px; /* Optional: Maintains consistency in spacing */
+  width: 100%; /* Makes sure it fills out its container */
+}
+
+/* Styles for each product */
+.product-list li {
+  flex: 1 1 calc(33.333% - 20px); /* Allows three items per row, accounting for the gap */
+  background-color: #f9f9f9; /* Light grey background */
+  border: 1px solid #e0e0e0; /* Adds a slight border */
+  padding: 10px; /* Adds padding inside each item */
+  text-align: center; /* Centers the content */
+  color: #333;
+}
+
+/* Responsive adjustments might still be necessary */
+@media (max-width: 768px) {
+  .product-list li {
+    flex: 1 1 calc(50% - 20px); /* Adjusts to two items per row on medium screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .product-list li {
+    flex: 1 1 100%; /* Adjusts to one item per row on small screens */
+  }
+}
+.main-wrapper {
+  display: flex;
+  margin-top: 100px;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  height: 100vh; /* Full height of the viewport */
+}
+
+/* Base styles for the single product container */
+.single-product-container {
+  max-width: 800px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.single-product-container img {
+  display: block;
+  max-width: 10%;
+  height: auto;
+  margin: 20px auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.single-product-container h2,
+.single-product-container p,
+.single-product-container div {
   text-align: center;
+  margin: 10px 0;
+  color: #333;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.single-product-container div {
+  font-weight: bold;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
+/* Media queries */
+
+/* For tablets and smaller devices */
+@media (max-width: 768px) {
+  .single-product-container img {
+    max-width: 70%; /* Makes the image larger on smaller devices for better visibility */
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+/* For mobile phones */
+@media (max-width: 480px) {
+  .single-product-container {
+    padding: 10px; /* Reduces padding on very small screens */
   }
-}
 
-.card {
-  padding: 2em;
-}
+  .single-product-container img {
+    max-width: 90%; /* Allows the image to take more space for better readability */
+  }
 
-.read-the-docs {
-  color: #888;
+  /* Adjusting text size for better readability on small screens */
+  .single-product-container h2 {
+    font-size: 1.5em; /* Enlarges the title */
+  }
+
+  .single-product-container p,
+  .single-product-container div {
+    font-size: 1em; /* Adjusts the text size for better readability */
+  }
 }
