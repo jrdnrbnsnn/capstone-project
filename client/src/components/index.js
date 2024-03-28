@@ -1,4 +1,5 @@
 const API_URL = "https://fakestoreapi.com";
+const API_URL2 = "http://localhost:3000/api";
 
 export async function fetchProducts() {
   try {
@@ -50,4 +51,24 @@ export async function fetchCategory(category) {
   } catch (error) {
     console.error(error);
   }
+}
+
+export async function register(username, password) {
+  const response = await fetch(`${API_URL2}/register`, {
+    method: "POST",
+    body: JSON.stringify({ username, password }),
+    headers: { "Content-Type": "application/json" },
+  });
+  const result = await response.json();
+  return result.token;
+}
+
+export async function login(username, password) {
+  const response = await fetch(`${API_URL2}/login`, {
+    method: "POST",
+    body: JSON.stringify({ username, password }),
+    headers: { "Content-Type": "application/json" },
+  });
+  const result = await response.json();
+  return result.token;
 }
