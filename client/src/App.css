@@ -59,6 +59,23 @@
   gap: 30px;
   justify-content: center;
 }
+
+.navbar .logout-button {
+  background-color: #444; /* Slightly lighter than the navbar for contrast */
+  color: #ffffff; /* Keeps text color consistent with other navbar links */
+  border: none; /* Removes default border */
+
+  font-size: 16px; /* Ensures font size is consistent with your navbar's design */
+  cursor: pointer; /* Changes cursor to pointer to indicate clickability */
+  border-radius: 5px; /* Optional: adds rounded corners for a modern look */
+  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.navbar .logout-button:hover {
+  background-color: #555; /* Darkens button on hover for interactive feedback */
+  color: #ddd; /* Optional: slightly changes the text color on hover */
+}
+
 /* Styles for the featured product */
 .featured-product {
   background-color: white; /* Sets the background color to white */
@@ -197,4 +214,93 @@
   .single-product-container div {
     font-size: 1em; /* Adjusts the text size for better readability */
   }
+}
+/* Styles for the Register Page Container */
+.register-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 400px; /* Adjusts the width of the form */
+  margin: 0 auto;
+  margin-top: calc(100vh - 85vh); /* Centers the form vertically */
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+}
+
+/* Styles for the Form Elements */
+.register-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Spacing between form elements */
+}
+
+.register-container form input,
+.register-container form button {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px; /* Adjusts the font size for better readability */
+}
+
+/* Styles for the Input Fields */
+.register-container form input {
+  background-color: #f9f9f9;
+}
+
+/* Styles for the Submit Button */
+.register-container form button {
+  background-color: #333;
+  color: #ffffff;
+  font-weight: bold;
+  cursor: pointer; /* Changes the cursor to a pointer on hover */
+  transition: background-color 0.3s ease; /* Smooth transition for button background color */
+}
+
+.register-container form button:hover {
+  background-color: #555; /* Darkens the button on hover */
+}
+
+/* Styles for the Add Product Form Container */
+.add-product-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 500px; /* Adjusts the width to fit the form */
+  margin: 20px auto; /* Adds margin to the top for spacing and auto for horizontal centering */
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+}
+
+/* Styles specific to Add Product form inputs and button for differentiation */
+.add-product-container form input,
+.add-product-container form textarea,
+.add-product-container form button {
+  padding: 12px; /* Slightly larger padding for better form control visibility */
+  margin-bottom: 15px; /* Adds more space between form controls */
+  border: 1px solid #ccc; /* Lighter border color */
+  border-radius: 4px;
+}
+
+.add-product-container form textarea {
+  height: 100px; /* Gives more room for the description */
+  resize: vertical; /* Allows vertical resizing */
+}
+
+/* Enhancing the submit button for better UX */
+.add-product-container form button {
+  background-color: #007bff; /* Bootstrap primary color for familiarity */
+  color: white;
+  font-size: 18px; /* Larger font size for readability */
+}
+
+.add-product-container form button:hover {
+  background-color: #0056b3; /* A darker shade on hover for a subtle effect */
 }

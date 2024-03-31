@@ -9,7 +9,9 @@ export default function NavbarCategories() {
     async function fetchData() {
       try {
         const categories = await fetchAllCategories();
+        console.log(categories);
         setCategories(categories);
+        console.log(categories);
       } catch (error) {
         console.error("Failed to fetch products:", error);
       }

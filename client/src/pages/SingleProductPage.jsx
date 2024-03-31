@@ -3,16 +3,16 @@ import { useEffect, useState } from "react";
 import { fetchSingleProductPage } from "../components";
 
 export default function SingleProductPage() {
-  const { id } = useParams();
+  const { product_id } = useParams();
   const [product, setProduct] = useState(null);
 
   useEffect(() => {
     async function fetchData() {
-      const product = await fetchSingleProductPage(id);
+      const product = await fetchSingleProductPage(product_id);
       setProduct(product);
     }
     fetchData();
-  }, [id]);
+  }, [product_id]);
 
   if (!product) {
     return <div>Loading...</div>;
@@ -21,18 +21,15 @@ export default function SingleProductPage() {
   return (
     <div className="main-wrapper">
       <div className="single-product-container">
-        <h2>{product.title}</h2>
+        <h2>{product.name}</h2>
         <img
-          src={product.image}
-          alt={product.title}
+          src={product.image_url}
+          alt={product.name}
           style={{ maxWidth: "100%", height: "auto" }}
         />
         <p>Category: {product.category}</p>
         <p>Description: {product.description}</p>
         <p>Price: ${product.price}</p>
-        <div>
-          Rating: {product.rating.rate} ({product.rating.count} reviews)
-        </div>
       </div>
     </div>
   );

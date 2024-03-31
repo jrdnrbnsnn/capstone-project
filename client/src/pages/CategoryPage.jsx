@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { fetchCategory } from "../components";
 import { Link } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 export default function CategoryPage() {
   const { categoryName } = useParams();
+  console.log(categoryName);
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -12,6 +14,7 @@ export default function CategoryPage() {
       try {
         const data = await fetchCategory(categoryName);
         setProducts(data);
+        console.log(data);
       } catch (error) {
         console.error("Failed to fetch category products:", error);
       }
@@ -26,16 +29,12 @@ export default function CategoryPage() {
         <ul>
           {products.map((product) => (
             <li key={product.id}>
-              <h2>{product.title}</h2>
+              <h2>{product.name}</h2>
               <Link to={`/products/${product.id}`}>
-                <img src={product.image} alt={product.title} />
+                <img src={product.image_url} alt={product.title} />
               </Link>
               <p>Category: {product.category}</p>
               <p>Price: ${product.price}</p>
-              <p>
-                Rating: {product.rating.rate} out of {product.rating.count}{" "}
-                reviews
-              </p>
             </li>
           ))}
         </ul>

@@ -16,7 +16,7 @@ export default function Register({ setToken }) {
 
   return (
     <>
-      <div>
+      <div className="register-container">
         <h2>Register</h2>
         <form onSubmit={handleSumbit}>
           <div>

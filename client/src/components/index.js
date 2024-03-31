@@ -1,11 +1,26 @@
-const API_URL = "https://fakestoreapi.com";
+const API_URL = "http://localhost:3000/api";
 const API_URL2 = "http://localhost:3000/api";
+
+export async function addProduct(productDetails) {
+  try {
+    const response = await fetch(`${API_URL}/products`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(productDetails),
+    });
+    if (!response.ok) throw new Error("Network response was not ok.");
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("There was an error!", error);
+    throw error;
+  }
+}
 
 export async function fetchProducts() {
   try {
     const response = await fetch(`${API_URL}/products`);
     const data = await response.json();
-    console.log(data);
     return data;
   } catch (error) {
     console.error(error);
@@ -22,9 +37,9 @@ export async function fetchSingleProduct() {
   }
 }
 
-export async function fetchSingleProductPage(id) {
+export async function fetchSingleProductPage(product_id) {
   try {
-    const response = await fetch(`${API_URL}/products/${id}`);
+    const response = await fetch(`${API_URL}/products/${product_id}`);
     const data = await response.json();
     return data;
   } catch (error) {
@@ -34,9 +49,9 @@ export async function fetchSingleProductPage(id) {
 
 export async function fetchAllCategories() {
   try {
-    const response = await fetch(`${API_URL}/products/categories`);
+    const response = await fetch(`${API_URL}/categories`);
     const data = await response.json();
-    console.log(data);
+
     return data;
   } catch (error) {
     console.log(error);
@@ -45,8 +60,11 @@ export async function fetchAllCategories() {
 
 export async function fetchCategory(category) {
   try {
-    const response = await fetch(`${API_URL}/products/category/${category}`);
+    const response = await fetch(
+      `${API_URL}/products/category/${encodeURIComponent(category)}`
+    );
     const data = await response.json();
+    console.log(data);
     return data;
   } catch (error) {
     console.error(error);

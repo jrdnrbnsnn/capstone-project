@@ -1,6 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-export default function Navbar({ token }) {
+export default function Navbar({ setToken, token }) {
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    setToken(null);
+    navigate("/login");
+  };
   return (
     <div className="navbar">
       <nav>
@@ -20,6 +25,13 @@ export default function Navbar({ token }) {
           ) : null}
           <li>
             <Link to="/account">Account</Link>
+          </li>
+          <li>
+            {token ? (
+              <button className="logout-button" onClick={handleLogout}>
+                Logout
+              </button>
+            ) : null}
           </li>
         </ul>
       </nav>
