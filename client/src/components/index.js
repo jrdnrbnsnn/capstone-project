@@ -1,9 +1,8 @@
-const API_URL = "http://localhost:3000/api";
-const API_URL2 = "http://localhost:3000/api";
+const BASE_URL = "http://localhost:3000/api";
 
 export async function addProduct(productDetails) {
   try {
-    const response = await fetch(`${API_URL}/products`, {
+    const response = await fetch(`${BASE_URL}/products`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(productDetails),
@@ -19,7 +18,7 @@ export async function addProduct(productDetails) {
 
 export async function fetchProducts() {
   try {
-    const response = await fetch(`${API_URL}/products`);
+    const response = await fetch(`${BASE_URL}/products`);
     const data = await response.json();
     return data;
   } catch (error) {
@@ -29,7 +28,7 @@ export async function fetchProducts() {
 
 export async function fetchSingleProduct() {
   try {
-    const response = await fetch(`${API_URL}/products/14`);
+    const response = await fetch(`${BASE_URL}/products/14`);
     const data = await response.json();
     return data;
   } catch (error) {
@@ -39,7 +38,7 @@ export async function fetchSingleProduct() {
 
 export async function fetchSingleProductPage(product_id) {
   try {
-    const response = await fetch(`${API_URL}/products/${product_id}`);
+    const response = await fetch(`${BASE_URL}/products/${product_id}`);
     const data = await response.json();
     return data;
   } catch (error) {
@@ -49,7 +48,7 @@ export async function fetchSingleProductPage(product_id) {
 
 export async function fetchAllCategories() {
   try {
-    const response = await fetch(`${API_URL}/categories`);
+    const response = await fetch(`${BASE_URL}/categories`);
     const data = await response.json();
 
     return data;
@@ -61,7 +60,7 @@ export async function fetchAllCategories() {
 export async function fetchCategory(category) {
   try {
     const response = await fetch(
-      `${API_URL}/products/category/${encodeURIComponent(category)}`
+      `${BASE_URL}/products/category/${encodeURIComponent(category)}`
     );
     const data = await response.json();
     console.log(data);
@@ -72,7 +71,7 @@ export async function fetchCategory(category) {
 }
 
 export async function register(username, password) {
-  const response = await fetch(`${API_URL2}/register`, {
+  const response = await fetch(`${BASE_URL}/register`, {
     method: "POST",
     body: JSON.stringify({ username, password }),
     headers: { "Content-Type": "application/json" },
@@ -82,11 +81,28 @@ export async function register(username, password) {
 }
 
 export async function login(username, password) {
-  const response = await fetch(`${API_URL2}/login`, {
+  const response = await fetch(`${BASE_URL}/login`, {
     method: "POST",
     body: JSON.stringify({ username, password }),
     headers: { "Content-Type": "application/json" },
   });
   const result = await response.json();
   return result.token;
+}
+
+export async function addItemtoCartFE({ product_id, quantity, token }) {
+  try {
+    const response = await fetch(`${BASE_URL}/carts/add`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+      body: JSON.stringify({ product_id, quantity }),
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("There was an error adding the item to the cart", error);
+  }
 }

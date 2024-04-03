@@ -1,5 +1,5 @@
 const pg = require("pg");
-const bcyrpt = require("bcrypt");
+const bcrypt = require("bcrypt");
 const uuid = require("uuid");
 
 const client = new pg.Client(
@@ -33,18 +33,18 @@ async function addProduct(
   return rows[0];
 }
 // Create cart for a user
-async function createCart(userId) {
+async function createCart(user_id) {
   const SQL = `
       INSERT INTO carts(cart_id, user_id)
       VALUES ($1, $2)
       RETURNING *;
     `;
-  const { rows } = await client.query(SQL, [uuid.v4(), userId]);
+  const { rows } = await client.query(SQL, [uuid.v4(), user_id]);
   return rows[0];
 }
 
 // Add an item to a cart
-async function addItemToCart(cartId, productId, quantity) {
+async function addItemToCart(cart_id, product_id, quantity) {
   const SQL = `
       INSERT INTO cart_items(cart_item_id, cart_id, product_id, quantity)
       VALUES ($1, $2, $3, $4)
@@ -52,8 +52,8 @@ async function addItemToCart(cartId, productId, quantity) {
     `;
   const { rows } = await client.query(SQL, [
     uuid.v4(),
-    cartId,
-    productId,
+    cart_id,
+    product_id,
     quantity,
   ]);
   return rows[0];
@@ -78,7 +78,7 @@ async function getProductsByCategory(category) {
 }
 
 // Get cart items for a user
-async function getCartItems(userId) {
+async function getCartItems(user_id) {
   const SQL = `
       SELECT cart_items.cart_item_id, cart_items.quantity, products.*
       FROM cart_items
@@ -86,7 +86,7 @@ async function getCartItems(userId) {
       JOIN products ON cart_items.product_id = products.product_id
       WHERE carts.user_id = $1;
     `;
-  const { rows } = await client.query(SQL, [userId]);
+  const { rows } = await client.query(SQL, [user_id]);
   return rows;
 }
 
@@ -118,7 +118,7 @@ async function register(username, password) {
     VALUES ($1, $2, $3)
     RETURNING *
     `;
-  const hash = await bcyrpt.hash(password, 10);
+  const hash = await bcrypt.hash(password, 10);
   const { rows } = await client.query(SQL, [uuid.v4(), username, hash]);
   const user = rows[0];
   return user;
@@ -135,7 +135,7 @@ async function login(username, password) {
   if (!user) {
     throw new Error("User not found");
   }
-  const match = await bcyrpt.compare(password, user.password);
+  const match = await bcrypt.compare(password, user.password);
   return user;
 }
 
@@ -145,6 +145,17 @@ async function getAllUsers() {
     `;
 
   return client.query(SQL);
+}
+
+async function getCartByUserId(user_id) {
+  const SQL = `
+        SELECT * FROM carts
+        WHERE user_id = $1
+        ORDER BY created_at DESC
+        LIMIT 1;
+      `;
+  const { rows } = await client.query(SQL, [user_id]);
+  return rows.length ? rows[0] : null;
 }
 
 async function createTables() {
@@ -204,4 +215,5 @@ module.exports = {
   getProductById,
   getAllCategories,
   getProductsByCategory,
+  getCartByUserId,
 };

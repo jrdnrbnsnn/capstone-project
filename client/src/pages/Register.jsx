@@ -10,7 +10,6 @@ export default function Register({ setToken }) {
     const token = await register(username, password);
     if (token) {
       setToken(token);
-      console.log(token);
     }
   }
 

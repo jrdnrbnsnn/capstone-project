@@ -15,6 +15,7 @@ const {
   getProductById,
   getAllCategories,
   getProductsByCategory,
+  getCartByUserId,
 } = require("./db");
 const app = express();
 
@@ -123,15 +124,24 @@ app.post("/api/products", async (req, res, next) => {
 });
 
 // Route to add an item to a cart
-app.post("/api/carts/add", async (req, res, next) => {
-  const { userId, productId, quantity } = req.body;
+app.post("/api/carts/add", requireToken, async (req, res, next) => {
+  const { product_id, quantity } = req.body;
   try {
     // Check if the user already has a cart, if not, create one
-    let userCart = await getCartByUserId(userId);
+    const token = req.headers.authorization;
+    const decodedToken = jwt.verify(token, "secret");
+    const user_id = decodedToken.user_id;
+    console.log(user_id);
+
+    let userCart = await getCartByUserId(user_id);
     if (!userCart) {
-      userCart = await createCart(userId);
+      userCart = await createCart(user_id);
     }
-    const cartItem = await addItemToCart(userCart.cart_id, productId, quantity);
+    const cartItem = await addItemToCart(
+      userCart.cart_id,
+      product_id,
+      quantity
+    );
     res.status(201).json(cartItem);
   } catch (error) {
     next(error);

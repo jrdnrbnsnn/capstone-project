@@ -1,9 +1,10 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { fetchSingleProductPage } from "../components";
-
-export default function SingleProductPage() {
+import AddtoCartButton from "../components/AddToCartButton";
+export default function SingleProductPage({ token }) {
   const { product_id } = useParams();
+
   const [product, setProduct] = useState(null);
 
   useEffect(() => {
@@ -30,6 +31,7 @@ export default function SingleProductPage() {
         <p>Category: {product.category}</p>
         <p>Description: {product.description}</p>
         <p>Price: ${product.price}</p>
+        <AddtoCartButton product_id={product_id} token={token} />
       </div>
     </div>
   );

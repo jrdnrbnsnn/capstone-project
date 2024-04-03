@@ -5,7 +5,7 @@ import AppRoutes from "./Router/AppRoutes";
 import { useEffect, useState } from "react";
 
 function App() {
-  const [token, setToken] = useState(localStorage.getItem("token" || null));
+  const [token, setToken] = useState(localStorage.getItem("token") || null);
   useEffect(() => {
     if (token) {
       localStorage.setItem("token", token);
@@ -18,7 +18,7 @@ function App() {
     <>
       <div className="main-container">
         <Navbar token={token} setToken={setToken} />
-        <NavbarCategories />
+        <NavbarCategories token={token} />
         <AppRoutes token={token} setToken={setToken} />
       </div>
     </>
