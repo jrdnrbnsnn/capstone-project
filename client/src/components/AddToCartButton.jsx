@@ -1,11 +1,6 @@
-import { useParams } from "react-router-dom";
 import { addItemtoCartFE } from ".";
-import { jwtDecode } from "jwt-decode";
 
 export default function AddtoCartButton({ product_id, token }) {
-  console.log(token);
-  console.log(product_id);
-
   const handleAddToCart = async (e) => {
     e.preventDefault();
     const quantity = 1;

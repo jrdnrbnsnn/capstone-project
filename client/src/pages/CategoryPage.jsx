@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { fetchCategory } from "../components";
 import { Link } from "react-router-dom";
-import { Navigate } from "react-router-dom";
 
 export default function CategoryPage() {
   const { categoryName } = useParams();
@@ -30,7 +29,7 @@ export default function CategoryPage() {
           {products.map((product) => (
             <li key={product.id}>
               <h2>{product.name}</h2>
-              <Link to={`/products/${product.id}`}>
+              <Link to={`/products/${product.product_id}`}>
                 <img src={product.image_url} alt={product.title} />
               </Link>
               <p>Category: {product.category}</p>

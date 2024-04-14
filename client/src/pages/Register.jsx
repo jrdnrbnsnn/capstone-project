@@ -1,15 +1,18 @@
 import { useState } from "react";
 import { register } from "../components";
+import { useNavigate } from "react-router-dom";
 
 export default function Register({ setToken }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   async function handleSumbit(e) {
     e.preventDefault();
     const token = await register(username, password);
     if (token) {
       setToken(token);
+      navigate("/");
     }
   }
 

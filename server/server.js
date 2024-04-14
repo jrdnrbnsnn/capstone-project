@@ -16,11 +16,18 @@ const {
   getAllCategories,
   getProductsByCategory,
   getCartByUserId,
+  deleteCartItem,
 } = require("./db");
 const app = express();
 
 app.use(express.json());
 app.use(cors());
+app.use(require("morgan")("dev"));
+app
+  .get("/", (req, res) =>
+    res.sendFile(path.join(__dirname, "../client/dist/index.html"))
+  )
+  .app.use(express.static(path.join(__dirname, "../client/dist")));
 
 // LOGIN ROUTE
 app.post("/api/login", async (req, res, next) => {
@@ -48,6 +55,7 @@ app.post("/api/register", async (req, res, next) => {
   }
 });
 
+// Requires token in app routes
 function requireToken(req, res, next) {
   const token = req.headers.authorization;
   try {
@@ -149,10 +157,12 @@ app.post("/api/carts/add", requireToken, async (req, res, next) => {
 });
 
 // Route to view cart items
-app.get("/api/carts/:userId", async (req, res, next) => {
-  const { userId } = req.params;
+app.get("/api/carts/:user_id", requireToken, async (req, res, next) => {
+  const token = req.headers.authorization;
+  const decodedToken = jwt.verify(token, "secret");
+  const user_id = decodedToken.user_id;
   try {
-    const items = await getCartItems(userId);
+    const items = await getCartItems(user_id);
     res.json(items);
   } catch (error) {
     next(error);
@@ -167,6 +177,34 @@ app.get("/api/products", async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+});
+
+// Route to delete an item from a cart that belongs to user
+app.delete(
+  "/api/carts/delete/:cart_item_id",
+  requireToken,
+  async (req, res, next) => {
+    const { cart_item_id } = req.params;
+    const user_id = req.user.user_id;
+    try {
+      const deletedItem = await deleteCartItem(cart_item_id, user_id);
+      if (!deletedItem) {
+        return res.status(404).send({
+          message: "Cart item not found or does not belong to your cart",
+        });
+      }
+      res.json({ message: "Cart item deleted successfully", deletedItem });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+app.use((err, req, res, next) => {
+  console.log(err);
+  res
+    .status(err.status || 500)
+    .send({ error: err.message ? err.message : err });
 });
 
 async function init() {

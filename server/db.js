@@ -42,6 +42,22 @@ async function createCart(user_id) {
   const { rows } = await client.query(SQL, [uuid.v4(), user_id]);
   return rows[0];
 }
+// Function to delete a cart item with verification items belongs to user
+async function deleteCartItem(cart_item_id, user_id) {
+  const SQL = `
+        DELETE FROM cart_items
+        WHERE cart_item_id = $1
+        AND cart_id IN (
+          SELECT cart_id FROM carts WHERE user_id = $2
+        )
+        RETURNING *;
+      `;
+  const { rows } = await client.query(SQL, [cart_item_id, user_id]);
+  if (rows.length === 0) {
+    return null;
+  }
+  return rows[0];
+}
 
 // Add an item to a cart
 async function addItemToCart(cart_id, product_id, quantity) {
@@ -216,4 +232,5 @@ module.exports = {
   getAllCategories,
   getProductsByCategory,
   getCartByUserId,
+  deleteCartItem,
 };

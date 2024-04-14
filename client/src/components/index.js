@@ -59,9 +59,7 @@ export async function fetchAllCategories() {
 
 export async function fetchCategory(category) {
   try {
-    const response = await fetch(
-      `${BASE_URL}/products/category/${encodeURIComponent(category)}`
-    );
+    const response = await fetch(`${BASE_URL}/products/category/${category}`);
     const data = await response.json();
     console.log(data);
     return data;
@@ -104,5 +102,40 @@ export async function addItemtoCartFE({ product_id, quantity, token }) {
     return data;
   } catch (error) {
     console.error("There was an error adding the item to the cart", error);
+  }
+}
+
+export async function getCartItemsFE(user_id, token) {
+  try {
+    const response = await fetch(`${BASE_URL}/carts/${user_id}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json", Authorization: token },
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function deleteItemFromCart(cart_item_id, token) {
+  try {
+    const response = await fetch(`${BASE_URL}/carts/delete/${cart_item_id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-type": "application/json",
+        Authorization: token,
+      },
+    });
+    if (!response.ok) {
+      throw new Error(
+        `Network response was not ok (status: ${response.status})`
+      );
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("There was an error deleting the item", error);
+    throw error;
   }
 }
