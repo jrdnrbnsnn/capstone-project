@@ -1,6 +1,7 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const cors = require("cors");
+const path = require("path");
 const {
   client,
   createTables,
@@ -23,11 +24,10 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 app.use(require("morgan")("dev"));
-app
-  .get("/", (req, res) =>
-    res.sendFile(path.join(__dirname, "../client/dist/index.html"))
-  )
-  .app.use(express.static(path.join(__dirname, "../client/dist")));
+app.get("/", (req, res) =>
+  res.sendFile(path.join(__dirname, "../client/dist/index.html"))
+);
+app.use(express.static(path.join(__dirname, "../client/dist")));
 
 // LOGIN ROUTE
 app.post("/api/login", async (req, res, next) => {
