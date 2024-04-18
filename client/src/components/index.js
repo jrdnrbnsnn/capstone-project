@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:3000/api";
+const BASE_URL = "https://two302-acc-capstone-fe-goh0.onrender.com/api";
 
 export async function addProduct(productDetails) {
   try {
