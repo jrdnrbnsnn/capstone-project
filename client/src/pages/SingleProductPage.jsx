@@ -31,6 +31,7 @@ export default function SingleProductPage({ token }) {
         <p>Category: {product.category}</p>
         <p>Description: {product.description}</p>
         <p>Price: ${product.price}</p>
+        <p>Quantity Available: ${product.qty_available}</p>
         <AddtoCartButton product_id={product_id} token={token} />
       </div>
     </div>

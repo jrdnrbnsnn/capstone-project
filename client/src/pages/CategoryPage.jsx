@@ -13,7 +13,7 @@ export default function CategoryPage() {
       try {
         const data = await fetchCategory(categoryName);
         setProducts(data);
-        console.log(data);
+        // console.log(data);
       } catch (error) {
         console.error("Failed to fetch category products:", error);
       }
