@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 export default function Products() {
   const [products, setProducts] = useState([]);
-  //   const [product, setProduct] = useState([]);
+  const [product, setProduct] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
